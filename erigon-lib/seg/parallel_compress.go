@@ -71,6 +71,7 @@ func coverWordByPatterns(trace bool, input []byte, mf2 *patricia.MatchFinder2, o
 
 		m.RLock()
 		if _, ok := usedPatterns[p.code]; !ok && len(usedPatterns) >= effectiveDictLimit {
+			m.RUnlock()
 			continue
 		}
 		m.RUnlock()
