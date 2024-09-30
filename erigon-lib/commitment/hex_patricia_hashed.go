@@ -1636,8 +1636,10 @@ func (hph *HexPatriciaHashed) Process(ctx context.Context, updates *Updates, log
 	var Li int
 	for _, k := range ends {
 		v := hph.hadToLoadL[k]
-		accs := fmt.Sprintf("load=%s skip=%s (%.1f%%) reset %.1f%%", common.PrettyCounter(v.accLoaded), common.PrettyCounter(v.accSkipped), 100*(float64(v.accSkipped)/float64(v.accLoaded+v.accSkipped)), 100*(float64(v.accReset)/float64(v.accLoaded)))
-		stors := fmt.Sprintf("load=%s skip=%s (%.1f%%) reset %.1f%%", common.PrettyCounter(v.storLoaded), common.PrettyCounter(v.storSkipped), 100*(float64(v.storSkipped)/float64(v.storLoaded+v.storSkipped)), 100*(float64(v.storReset)/float64(v.storLoaded)))
+		accs := fmt.Sprintf("load=%s (reset %.1f%%) skipped=%s (%.1f%%)", common.PrettyCounter(v.accLoaded), 100*(float64(v.accReset)/float64(v.accLoaded)),
+			common.PrettyCounter(v.accSkipped), 100*(float64(v.accSkipped)/float64(v.accLoaded+v.accSkipped)))
+		stors := fmt.Sprintf("load=%s (reset %.1f%%) skipped=%s (%.1f%%)", common.PrettyCounter(v.storLoaded), 100*(float64(v.storReset)/float64(v.storLoaded)),
+			common.PrettyCounter(v.storSkipped), 100*(float64(v.storSkipped)/float64(v.storLoaded+v.storSkipped)))
 		if k == 0 {
 			log.Debug("branchData memoization, new branches", "endStep", k, "accounts", accs, "storages", stors)
 		} else {
